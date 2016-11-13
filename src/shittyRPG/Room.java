@@ -1,5 +1,12 @@
 package shittyRPG;
 
+/**
+ * The Room class contains and handles all information about a room.
+ * It contains a counter of adjacent rooms, pointers to other rooms in the four cardinal directions,
+ *     and a message that gets printed when the player enters the room.
+ * @author NaturalLogZ
+ *
+ */
 public class Room {
 	//Adjacent Rooms
 	private int numAdjRooms;
@@ -10,12 +17,26 @@ public class Room {
 	private String enterMessage;
 	
 	//Methods
-	//Ctor
+	/**
+	 * Constructor for Room class.
+	 * Initializes the room with an enterMessage which is printed when the user enters this room.
+	 * @param enterMessage
+	 */
 	public Room(String enterMessage) {
 		this.enterMessage = enterMessage;
 		north = east = south = west = null;
 	}
 
+	/**
+	 * Sets the given other to be a neighbour of this to the given direction
+	 *     then calls the function in reverse so that this is a neighbour of
+	 *     other to the opposite direction.
+	 * @param other The other room that will become this rooms neighbour
+	 * @param direction The direction in which the other room will be connected to this.
+	 *                    Therefore if direction is n, other will be to the north of this.
+	 * @param recurse Boolean used to tell if this is the second part of the function.
+	 *                  Avoids infinite recursion.
+	 */
 	public void setAdjacency(Room other, char direction, Boolean recurse) {
 		char complementDir;
 		numAdjRooms++;
@@ -45,6 +66,13 @@ public class Room {
 		}
 	}
 		
+	/**
+	 * Returns the room that is to the given direction of this.
+	 * (Recall that if there is no room to a direction that direction's value will be null)
+	 * If the given direction is not a valid direction, returns null.
+	 * @param direction The direction in which we are looking for an adjacent room.
+	 * @return A Room class (the room in the given direction) or null (if no room or invalid direction).
+	 */
 	public Room getAdjacentRoom(String direction) {
 		if(direction == "north") return north;
 		if(direction == "east") return east;
@@ -55,6 +83,10 @@ public class Room {
 		return null;
 	}
 
+	/**
+	 * The function that is called when the player moves into this room.
+	 * It prints information that might be useful to the player, the enterMessage.
+	 */
 	public void enter() {
 		System.out.println("You enter a new room.");
 		System.out.println(enterMessage);
